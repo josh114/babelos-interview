@@ -1,0 +1,39 @@
+.topbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-pri);
+  font-size: 14px;
+}
+.topbar-left {
+  display: flex;
+  align-items: center;
+  &_icon {
+    font-size: 18px;
+  }
+  &_link {
+    a {
+      text-decoration: none;
+      color: var(--text-pri);
+      font-weight: 500;
+      margin-left: 10px;
+    }
+  }
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  &_link {
+    p {
+      font-size: 14px;
+      margin: 0;
+    }
+    a {
+      text-decoration: none;
+      color: var(--text-button);
+      font-weight: 600;
+      margin-left: 10px;
+    }
+  }
+}
