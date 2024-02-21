@@ -1,5 +1,6 @@
 import React from "react";
 import { IoMdAdd } from "react-icons/io";
+import { FiUploadCloud } from "react-icons/fi";
 
 const Farm = () => {
   const crops = [
@@ -36,7 +37,7 @@ const Farm = () => {
         </div>
 
         <div className="form-group">
-          <label className="form-label" for="farm_name">
+          <label className="form-label" htmlFor="farm_name">
             Farm Name*
           </label>
           <input className="form-input" id="farm_name" type="text" required />
@@ -72,7 +73,7 @@ const Farm = () => {
 
           <div className="form-group_crops">
             <div className="form-group">
-              <label className="form-label" for="crop_name">
+              <label className="form-label" htmlFor="crop_name">
                 What crop do you cultivate on this farm?
               </label>
               <select className="form-select" name="crop_name" id="crop_name">
@@ -133,7 +134,26 @@ const Farm = () => {
           <div>
             <p>Upload farm documents</p>
           </div>
-          <div className="farm-documents_form"></div>
+          <div className="farm-documents_form">
+            <label htmlFor="upload">
+              <div className="farm-documents_form-item">
+                <div className="farm-documents_form-item-icon">
+                  <FiUploadCloud className="farm-documents_icon" />
+                </div>
+                <input
+                  type="file"
+                  id="upload"
+                  className="farm-documents_input"
+                />
+                <div className="farm-documents_input-text-container">
+                  <p className="farm-documents_input-text">
+                    Click to upload <span>or drag and drop</span>
+                  </p>
+                  <p>PNG, JPG or PDF (max. 10MB)</p>
+                </div>
+              </div>
+            </label>
+          </div>
         </div>
       </div>
     </div>

@@ -21,10 +21,10 @@ const Registration = () => {
             <Topbar />
           </div>
         </div>
-        {/* <Personal /> */}
+        <Personal />
         {/* <Bank /> */}
         {/* <Security /> */}
-        <Farm />
+        {/* <Farm /> */}
       </div>
     </div>
   );

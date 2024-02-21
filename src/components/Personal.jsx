@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import useUserContext from "../hooks/useUserContext";
 
 const Personal = () => {
+  const { data, handleChange } = useUserContext();
+  const [msg, setMsg] = useState("Must be at least 8 characters");
+
+  // function validatePassword(password) {
+  //   const regex =
+  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_-+=\[\]{};':"\\|,.<>/?])[A-Za-z0-9!@#$%^&*()_-+=\[\]{};':"\\|,.<>/?]{8,}$/;
+
+  //   return regex.test(password);
+  // }
+
   const ageRange = () => {
     const options = [];
     for (let i = 18; i <= 40; i++) {
-      options.push(<option value={i}>{i}</option>);
+      options.push(i);
     }
     return options;
   };
@@ -20,25 +31,32 @@ const Personal = () => {
           <form className="form">
             <div className="form-name">
               <div className="form-group">
-                <label className="form-label" for="first_name">
+                <label className="form-label" htmlFor="first_name">
                   First Name*
                 </label>
                 <input
                   className="form-input"
                   id="first_name"
+                  name="first_name"
                   type="text"
+                  placeholder="First Name"
+                  value={data.first_name}
+                  onChange={handleChange}
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label className="form-label" for="last_name">
+                <label className="form-label" htmlFor="last_name">
                   Last Name*
                 </label>
                 <input
                   className="form-input"
                   id="last_name"
+                  name="last_name"
                   type="text"
+                  onChange={handleChange}
+                  placeholder="Last Name"
                   required
                 />
               </div>
@@ -46,7 +64,7 @@ const Personal = () => {
 
             <div className="form-phone">
               <div className="form-group">
-                <label className="form-label" for="number">
+                <label className="form-label" htmlFor="number">
                   Phone Number*
                 </label>
                 <div className="form-group_number">
@@ -58,6 +76,9 @@ const Personal = () => {
                   <input
                     className="form-input"
                     id="number"
+                    name="phone_number"
+                    placeholder="81000 0000"
+                    onChange={handleChange}
                     type="text"
                     required
                   />
@@ -67,30 +88,42 @@ const Personal = () => {
 
             <div className="form-email">
               <div className="form-group">
-                <label className="form-label" for="email">
+                <label className="form-label" htmlFor="email">
                   Email <span className="form-label_italic">(Optional)</span>
                 </label>
-                <input className="form-input" id="email" type="email" />
+                <input
+                  className="form-input"
+                  name="email"
+                  id="email"
+                  type="email"
+                  onChange={handleChange}
+                  placeholder="Email"
+                />
               </div>
             </div>
 
             <div className="form-age-gender">
               <div className="form-group">
-                <label className="form-label" for="age">
+                <label className="form-label" htmlFor="age">
                   Age*
                 </label>
-                <select className="form-select" name="age" id="age">
+                <select
+                  className="form-select"
+                  name="age"
+                  id="age"
+                  onChange={handleChange}
+                >
                   <option value="">Select age</option>
                   {ageRange().map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.props.children}
+                    <option key={option} value={option}>
+                      {option}
                     </option>
                   ))}
                 </select>
               </div>
 
               <div className="form-group">
-                <label className="form-label" for="gender">
+                <label className="form-label" htmlFor="gender">
                   Choose Gender*
                 </label>
 
@@ -101,6 +134,8 @@ const Personal = () => {
                       type="radio"
                       name="gender"
                       id="male"
+                      value={"male"}
+                      onChange={handleChange}
                     />
                     <label className="form-radio-label" id="male">
                       Male
@@ -113,6 +148,8 @@ const Personal = () => {
                       type="radio"
                       id="female"
                       name="gender"
+                      value={"female"}
+                      onChange={handleChange}
                     />
                     <label className="form-radio-label" id="female">
                       Female
@@ -124,17 +161,30 @@ const Personal = () => {
 
             <div className="form-address">
               <div className="form-group">
-                <label className="form-label" for="address">
+                <label className="form-label" htmlFor="address">
                   Residential Address*
                 </label>
-                <input className="form-input" id="address" type="text" />
+                <input
+                  className="form-input"
+                  id="address"
+                  type="text"
+                  name="address"
+                  onChange={handleChange}
+                  placeholder="Address"
+                  required
+                />
               </div>
             </div>
 
             <div className="form-site">
               <div className="form-group">
                 <label htmlFor="site">Site*</label>
-                <select className="form-select" name="site" id="site">
+                <select
+                  className="form-select"
+                  name="site"
+                  id="site"
+                  onChange={handleChange}
+                >
                   <option value="ajegunle">Ajegunle</option>
                   <option value="apo">Apo</option>
                   <option value="rumukrusi">Rumukrusi</option>
@@ -145,7 +195,12 @@ const Personal = () => {
             <div className="form-id">
               <div className="form-group">
                 <label htmlFor="id-type">ID Type*</label>
-                <select className="form-select" name="id-type" id="id-type">
+                <select
+                  className="form-select"
+                  name="id-type"
+                  id="id-type"
+                  onChange={handleChange}
+                >
                   <option value="national">National ID card (NIN)</option>
                   <option value="voter">Voter's Card</option>
                   <option value="passport">International Passport</option>
@@ -155,27 +210,33 @@ const Personal = () => {
 
             <div className="form-id_number">
               <div className="form-group">
-                <label className="form-label" for="id_number">
+                <label className="form-label" htmlFor="id_number">
                   ID Number*
                 </label>
-                <input className="form-input" id="id_number" type="text" />
+                <input
+                  className="form-input"
+                  id="id_number"
+                  name="id_number"
+                  type="text"
+                  onChange={handleChange}
+                />
               </div>
             </div>
 
             <div className="form-document">
               <div className="form-group">
-                <label className="form-label" for="id_image"></label>
+                <label className="form-label" htmlFor="id_image"></label>
                 <input className="form-input" id="id_image" type="file" />
               </div>
             </div>
 
             <div className="form-password">
               <div className="form-group">
-                <label htmlFor="password">Create Passwor</label>
+                <label htmlFor="password">Create Password</label>
                 <input className="form-input" id="password" type="password" />
               </div>
               <div className="form-group">
-                <label htmlFor="confirm_password">Create Passwor</label>
+                <label htmlFor="confirm_password">Confirm Password</label>
                 <input
                   className="form-input"
                   id="confirm_password"
@@ -183,7 +244,7 @@ const Personal = () => {
                 />
               </div>
               <div className="form-password_note">
-                <p>Must be at least 8 characters</p>
+                <p>{msg}</p>
                 <p>Must contain one special character</p>
               </div>
             </div>
