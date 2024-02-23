@@ -1,6 +1,7 @@
 .crops {
   margin-top: 50px;
   width: 100%;
+ 
   &-season {
     width: 100%;
     display: flex;
@@ -21,6 +22,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
+  margin-bottom: 20px;
 }
 
 .form-group_coordinates {
@@ -36,7 +38,7 @@
 
 .farm {
   &-content {
-    max-height: 80vh;
+    min-height: 80vh;
     // overflow-y: scroll;
     // overflow-x: visible;
   }
@@ -114,6 +116,14 @@
 
   p {
     margin: 0;
+  }
+}
+
+.padding{
+  @media screen and (min-width: 700px) {
+    @media screen and (min-width: 700px) {
+      padding-right: 100px;
+     }
   }
 }
 

@@ -1,50 +1,86 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { FiUploadCloud } from "react-icons/fi";
+import FarmSlider from "./FarmSlider";
+import Crops from "./Crops";
+import FarmAddedModal from "./FarmAddedModal";
+import { set } from "date-fns";
+import useUserContext from "../hooks/useUserContext";
 
 const Farm = () => {
-  const crops = [
-    "Corn",
-    "Rice",
-    "Wheat",
-    "Sugar Beet",
-    "Cotton",
-    "Sugarcane",
-    "Cashew",
-    "Mango",
-    "Vegetables",
-    "Coconut",
-  ];
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const { handleFarm, page, setPage, farmHide } = useUserContext();
+  const handleCropData = (data) => {
+    setCropData(data);
+  };
+  const handlePrev = () => setPage((prev) => prev - 1);
+  const handleSubmit = () => {
+    handleFarm(farmData);
+    setshowFarmAddedModal(true);
+  };
+  const [crops, setCrops] = useState([
+    <Crops key={0} handleData={handleCropData} />,
+  ]);
+  const [showfarmAddedModal, setshowFarmAddedModal] = useState(false);
+  const [farmName, setFarmName] = useState("");
+  const [farmlat, setFarmLat] = useState("");
+  const [farmlong, setFarmLong] = useState("");
+  const [cropData, setCropData] = useState({});
+
+  const handleAddCrop = (e) => {
+    e.preventDefault();
+    setCrops([
+      ...crops,
+      <Crops key={crops.length} handleData={handleCropData} />,
+    ]);
+  };
+
+  const farmData = {
+    name: farmName,
+    lat: farmlat,
+    address: "Apakjo",
+    long: farmlong,
+    crops: [cropData],
+    docUploads: [
+      {
+        url: "https://",
+      },
+      {
+        url: "https://",
+      },
+    ],
+  };
+  let dis;
+  const hideButton = {
+    display: "none",
+  };
+  const showButton = {
+    display: "block",
+  };
+  farmHide ? (dis = hideButton) : (dis = showButton);
+
+  // console.log(farmData);
   return (
-    <div className="farm form">
+    <div className="farm form padding">
       <div className="farm-content">
         <div className="farm-content_title">
           <h3>Farm Registration</h3>
         </div>
-
+        {/* <FarmSlider /> */}
         <div className="form-group">
           <label className="form-label" htmlFor="farm_name">
             Farm Name*
           </label>
-          <input className="form-input" id="farm_name" type="text" required />
+          <input
+            className="form-input"
+            id="farmName"
+            type="text"
+            required
+            onChange={(e) => setFarmName(e.target.value)}
+          />
         </div>
 
-        <div className="form-group_coordinates">
-          <label htmlFor=""></label>
+        <div className="form-group_coordinates" style={{ marginTop: "20px" }}>
+          <label htmlFor=""> Farm Coordinates*</label>
           <div className="form-group_coordinates-item">
             <div className="form-group">
               <input
@@ -52,6 +88,7 @@ const Farm = () => {
                 type="text"
                 id="farm_longitude"
                 placeholder="Longitude"
+                onChange={(e) => setFarmLong(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -60,6 +97,7 @@ const Farm = () => {
                 type="text"
                 id="farm_latitude"
                 placeholder="Latitude"
+                onChange={(e) => setFarmLat(e.target.value)}
               />
             </div>
           </div>
@@ -70,59 +108,14 @@ const Farm = () => {
           <div className="crops-title">
             <p>Crops cultivated and planting season</p>
           </div>
-
-          <div className="form-group_crops">
-            <div className="form-group">
-              <label className="form-label" htmlFor="crop_name">
-                What crop do you cultivate on this farm?
-              </label>
-              <select className="form-select" name="crop_name" id="crop_name">
-                {crops.map((crop) => (
-                  <option value="crop" key={crop}>
-                    {crop}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="crops-season">
-              <div className="form-group">
-                <label className="form-label" htmlFor="start_date">
-                  Start Date
-                </label>
-                <select
-                  className="form-select"
-                  name="start_date"
-                  id="start_date"
-                >
-                  {months.map((month) => (
-                    <option value="month" key={month}>
-                      {month}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="form-label" htmlFor="end_date">
-                  End Date
-                </label>
-                <select className="form-select" name="end_date" id="end_date">
-                  {months.reverse().map((month) => (
-                    <option value="month" key={month}>
-                      {month}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
+          {crops}
         </div>
 
         <div className="farm-crop_add">
           <div></div>
           <div className="farm-crop_add-item">
             <button className="button farm-crop_button">
-              <div className="button-icon">
+              <div className="button-icon" onClick={handleAddCrop}>
                 <IoMdAdd className="button-icon_icon" />
                 <p>Add another crop</p>
               </div>
@@ -155,7 +148,24 @@ const Farm = () => {
             </label>
           </div>
         </div>
+        <div className="page-right_button-container">
+          <button
+            className={`button main_button`}
+            onClick={handlePrev}
+            style={{ display: page != 3 ? "none" : "block" }}
+          >
+            Back
+          </button>
+          <button
+            className="button hide green_button main_button"
+            onClick={handleSubmit}
+            style={dis}
+          >
+            Add farm
+          </button>
+        </div>
       </div>
+      {showfarmAddedModal && <FarmAddedModal setShow={setshowFarmAddedModal} />}
     </div>
   );
 };

@@ -1,0 +1,61 @@
+.farm-modal{
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    width: 100%;
+    background-color: rgba(14, 13, 13, 0.4);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    &_body{
+        height: auto;
+        width: auto;
+        background-color: #fff;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        padding: 40px 100px;
+        @media screen and (max-width: 338px) {
+            padding: 40px 50px;
+          }
+        &-icon{
+            text-align: center;
+        }
+        &-text{
+            h1{
+                text-align: center;
+                margin-top: 10px;
+                color: #4e5869;
+                font-size: 22px;
+                line-height: 0.5;
+            }
+            p{
+                text-align: center;
+                color: #4e5869;
+            }
+        }
+        &-buttons{
+            display: flex;
+            flex-direction: column;
+            &_pri{
+                color: #fff;
+                background-color: var(--pri-color);
+                padding: 10px;
+                margin-bottom: 10px;
+                border: none;
+                border-radius: 5px;
+            }
+            &_sec{
+                color: #4e5869;
+                font-weight: 600;
+                background-color: #fff;
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #9ba3b1;
+            }
+        }
+    }
+}

@@ -1,24 +1,13 @@
 import React, { useState } from "react";
 import useUserContext from "../hooks/useUserContext";
 
+import Password from "./Password";
+import UploadID from "./UploadID";
+import UploadPic from "./UploadPic";
+
 const Personal = () => {
-  const { data, handleChange } = useUserContext();
-  const [msg, setMsg] = useState("Must be at least 8 characters");
+  const { data, handleChange, handleRadio } = useUserContext();
 
-  // function validatePassword(password) {
-  //   const regex =
-  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_-+=\[\]{};':"\\|,.<>/?])[A-Za-z0-9!@#$%^&*()_-+=\[\]{};':"\\|,.<>/?]{8,}$/;
-
-  //   return regex.test(password);
-  // }
-
-  const ageRange = () => {
-    const options = [];
-    for (let i = 18; i <= 40; i++) {
-      options.push(i);
-    }
-    return options;
-  };
   return (
     <div className="main-content">
       <div className="main-content_form">
@@ -37,10 +26,9 @@ const Personal = () => {
                 <input
                   className="form-input"
                   id="first_name"
-                  name="first_name"
+                  name="firstName"
                   type="text"
                   placeholder="First Name"
-                  value={data.first_name}
                   onChange={handleChange}
                   required
                 />
@@ -53,7 +41,7 @@ const Personal = () => {
                 <input
                   className="form-input"
                   id="last_name"
-                  name="last_name"
+                  name="lastName"
                   type="text"
                   onChange={handleChange}
                   placeholder="Last Name"
@@ -70,13 +58,13 @@ const Personal = () => {
                 <div className="form-group_number">
                   <select
                     className="form-select"
-                    name="phone_number"
+                    name="credential"
                     id="phone_number"
                   ></select>
                   <input
                     className="form-input"
                     id="number"
-                    name="phone_number"
+                    name="credential"
                     placeholder="81000 0000"
                     onChange={handleChange}
                     type="text"
@@ -109,16 +97,17 @@ const Personal = () => {
                 </label>
                 <select
                   className="form-select"
-                  name="age"
+                  name="ageGroup"
                   id="age"
                   onChange={handleChange}
                 >
                   <option value="">Select age</option>
-                  {ageRange().map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
+                  <option value="18-25">18 - 25</option>
+                  <option value="26-35">26 - 35</option>
+                  <option value="36-45">36 - 45</option>
+                  <option value="46-55">46 - 55</option>
+                  <option value="56-65">56 - 65</option>
+                  <option value="66-75">66 - 75</option>
                 </select>
               </div>
 
@@ -134,8 +123,8 @@ const Personal = () => {
                       type="radio"
                       name="gender"
                       id="male"
-                      value={"male"}
-                      onChange={handleChange}
+                      defaultValue={"Male"}
+                      onChange={handleRadio}
                     />
                     <label className="form-radio-label" id="male">
                       Male
@@ -148,8 +137,8 @@ const Personal = () => {
                       type="radio"
                       id="female"
                       name="gender"
-                      value={"female"}
-                      onChange={handleChange}
+                      defaultValue={"Female"}
+                      onChange={handleRadio}
                     />
                     <label className="form-radio-label" id="female">
                       Female
@@ -168,7 +157,7 @@ const Personal = () => {
                   className="form-input"
                   id="address"
                   type="text"
-                  name="address"
+                  name="resAddress"
                   onChange={handleChange}
                   placeholder="Address"
                   required
@@ -179,12 +168,7 @@ const Personal = () => {
             <div className="form-site">
               <div className="form-group">
                 <label htmlFor="site">Site*</label>
-                <select
-                  className="form-select"
-                  name="site"
-                  id="site"
-                  onChange={handleChange}
-                >
+                <select className="form-select" name="site" id="site">
                   <option value="ajegunle">Ajegunle</option>
                   <option value="apo">Apo</option>
                   <option value="rumukrusi">Rumukrusi</option>
@@ -197,7 +181,7 @@ const Personal = () => {
                 <label htmlFor="id-type">ID Type*</label>
                 <select
                   className="form-select"
-                  name="id-type"
+                  name="idType"
                   id="id-type"
                   onChange={handleChange}
                 >
@@ -216,47 +200,16 @@ const Personal = () => {
                 <input
                   className="form-input"
                   id="id_number"
-                  name="id_number"
+                  name="idNumber"
                   type="text"
                   onChange={handleChange}
                 />
               </div>
             </div>
+            <UploadID />
+            <Password />
 
-            <div className="form-document">
-              <div className="form-group">
-                <label className="form-label" htmlFor="id_image"></label>
-                <input className="form-input" id="id_image" type="file" />
-              </div>
-            </div>
-
-            <div className="form-password">
-              <div className="form-group">
-                <label htmlFor="password">Create Password</label>
-                <input className="form-input" id="password" type="password" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="confirm_password">Confirm Password</label>
-                <input
-                  className="form-input"
-                  id="confirm_password"
-                  type="password"
-                />
-              </div>
-              <div className="form-password_note">
-                <p>{msg}</p>
-                <p>Must contain one special character</p>
-              </div>
-            </div>
-
-            <div>
-              <div className="form-group">
-                <input type="file" className="form-input" />
-              </div>
-              <div>
-                <p>PNG or JPG (max. 5MB)</p>
-              </div>
-            </div>
+            <UploadPic />
           </form>
         </div>
       </div>

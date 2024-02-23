@@ -1,6 +1,5 @@
-import { lazy, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { lazy } from "react";
+
 import "./sass/index.scss";
 import useTitle from "./hooks/useTitle";
 import {
@@ -10,9 +9,12 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Layout from "./components/Layout";
+import Dashboard from "./pages/Dashboard";
+import RequireAuth from "./features/auth/RequireAuth";
 
 const Home = lazy(() => import("./pages/Registration"));
 const Login = lazy(() => import("./pages/Login"));
+const Verification = lazy(() => import("./pages/Verification"));
 
 function App() {
   useTitle("farm warehouse");
@@ -21,6 +23,10 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
+        <Route path="verification" element={<Verification />} />
+        <Route path="dashboard" element={<RequireAuth />}>
+          <Route index element={<Dashboard />} />
+        </Route>
       </Route>
     )
   );

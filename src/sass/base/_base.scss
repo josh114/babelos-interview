@@ -4,7 +4,7 @@
   width: 100%;
   --primary-color: #000000;
   --sec-color: #f5f0ec;
-  --pri-color: #0a6c52;
+  --pri-color: #0d8a6a;
   --text-pri: #475467;
   --text-sec: #344054;
   --text-warn: #b54708;
@@ -21,10 +21,8 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  display: flex;
-  place-items: center;
   min-width: 320px;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   font-family: "Inter", sans-serif;
 }
@@ -35,4 +33,8 @@ body {
   border: 1px solid var(--border-pri);
   background-color: #fff;
   border-radius: 8px;
+}
+
+option {
+  font-family: "Inter";
 }
