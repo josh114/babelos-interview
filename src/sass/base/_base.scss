@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  width: 100%;
+  --primary-color: #000000;
+  --sec-color: #f5f0ec;
+  --pri-color: #0d8a6a;
+  --text-pri: #475467;
+  --text-sec: #344054;
+  --text-warn: #b54708;
+  --text-button: #0a6c52;
+  --border-pri: #d0d5dd;
+  --border-sec: #5ebaa2;
+  --border-ter: #fef0c7;
+  --bg-warn: #fffcf5;
+}
+#root {
+  width: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-width: 320px;
+  width: 100%;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+.button {
+  padding: 8px 20px;
+  outline: none;
+  border: 1px solid var(--border-pri);
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+option {
+  font-family: "Inter";
+}

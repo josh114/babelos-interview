@@ -1,0 +1,210 @@
+$farmBgColor: #fefdf9;
+$textPriColor: #714a39;
+$textSecColor: #a9aeb4;
+$farmNameColor: #636c79;
+$farmLongColor: #4eb485;
+$farmLongBgColor: #f6fef9;
+$formLongBorderColor: #d0f8e6;
+$farmLatColor: #7baef6;
+$farmLatBgColor: #f5faff;
+$farmLatBorderColor: #d0e2fc;
+$farmBorders: #fff5d7;
+$farmBtn: #fcf9f0;
+
+.farm-card {
+    width: 100%;
+    background-color: $farmBgColor;
+    height: auto;
+    border: 3px solid $farmBorders;
+    border-radius: 8px;
+
+    &_header {
+        margin: 0 20px;
+        display: flex;
+        gap: 10;
+        border-bottom: 3px solid $farmBorders;
+
+        &-title {
+            color: $textPriColor;
+            font-size: 13px;
+            margin-right: auto;
+            vertical-align: middle;
+
+            h3 {
+                margin: 10px 0;
+            }
+        }
+
+        &-buttons {
+            vertical-align: middle;
+            margin: 10px 0;
+        }
+    }
+
+    &_body {
+        margin: 0 20px;
+        line-height: 0.5;
+
+        &-details {
+            display: flex;
+            justify-content: space-between;
+
+            &_holder {
+                display: flex;
+
+                &-icon {
+                    margin-top: 6px;
+                    margin-right: 5px;
+                }
+
+                &-text {
+                    &_caption {
+                        color: $textSecColor;
+                        text-transform: uppercase;
+                        font-weight: 600;
+                        font-size: 10px;
+                    }
+
+                    &_name {
+                        color: $farmNameColor;
+                        font-size: 14px;
+                        font-weight: 600;
+                        padding: 5px 0;
+                    }
+
+                    &_longitude {
+                        color: $farmLongColor;
+                        font-size: 12px;
+                        font-weight: 600;
+                        background-color: $farmLongBgColor;
+                        padding: 5px 6px;
+                        border-radius: 10px;
+                        border: 1px solid $formLongBorderColor;
+                    }
+
+                    &_latitude {
+                        color: $farmLatColor;
+                        font-size: 12px;
+                        font-weight: 600;
+                        background-color: $farmLatBgColor;
+                        padding: 5px 6px;
+                        border-radius: 10px;
+                        border: 1px solid $farmLatBorderColor;
+                    }
+                }
+            }
+        }
+    }
+
+    &_footer {
+        margin: 0 20px;
+        display: flex;
+        gap: 10;
+        border-top: 3px solid $farmBorders;
+        line-height: 0.5;
+
+        &-details {
+            display: flex;
+            width: 100%;
+
+            &_crops,
+            &_documents {
+                display: flex;
+
+                &-icon {
+                    margin-top: 6px;
+                    margin-right: 5px;
+                }
+
+                &-text {
+                    &_caption {
+                        color: $textSecColor;
+                        text-transform: uppercase;
+                        font-weight: 600;
+                        font-size: 10px;
+                    }
+
+                    &_content {
+                        color: $farmNameColor;
+                        font-size: 14px;
+                        font-weight: 600;
+                        padding: 5px 0;
+
+                        &-button {
+                            background-color: $farmBtn;
+                            color: $textPriColor;
+                            border: 3px solid $farmBorders;
+                            margin: 0 5px;
+                            border-radius: 10px;
+                            padding: 2px 10px;
+                            font-weight: 600;
+                            text-transform: uppercase;
+                            font-size: 10px;
+                        }
+                    }
+                }
+            }
+
+            &_documents {
+                margin-left: auto;
+            }
+        }
+    }
+}
+
+.farm-slider {
+    &_controls {
+        display: flex;
+        padding: 10px 0;
+        gap: 10px;
+
+        &-next,
+        &-prev {
+            padding: 2px 3px 1px 3px;
+            border: 1px solid $textSecColor;
+            border-radius: 20px;
+        }
+
+        &-indicators {
+            display: flex;
+            gap: 5px;
+            justify-content: space-between;
+
+            &_active {
+                height: 20px;
+                background-color: #000;
+                padding: 3px;
+                height: 1px;
+                margin-top: 8px;
+                border-radius: 100%;
+            }
+
+            &_inactive {
+                padding: 3px;
+                height: 1px;
+                margin-top: 8px;
+                border-radius: 100%;
+                background-color: rgb(204, 203, 203);
+
+            }
+        }
+    }
+}
+
+.new-farmcaption{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    &_left, &_right{
+        height: 2px;
+        background-color: rgb(241, 241, 241);
+        width: 42%;
+        margin-top: 6px;
+    }
+    &_center{
+        text-transform: uppercase;
+        color: $textSecColor;
+        font-weight: bold;
+        font-size: 11px;
+    }
+}
