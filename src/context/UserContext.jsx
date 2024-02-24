@@ -53,6 +53,12 @@ export const UserProvider = ({ children }) => {
     }));
     console.log(data);
   };
+  const handlePhone = (phone) => {
+    setData((prevData) => ({
+      ...prevData,
+      credential: phone,
+    }));
+  };
   const addFarm = () => {};
   // "cropId": "fwc-do3o3xlz" Onion
   // "cropId": "fwc-354bssp7" Tomato
@@ -188,6 +194,7 @@ export const UserProvider = ({ children }) => {
         handleRadio,
         handleBank,
         handleFarm,
+        handlePhone,
         handlePassword,
         canNextPage1,
         canNextPage2,

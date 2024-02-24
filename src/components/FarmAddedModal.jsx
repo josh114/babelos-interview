@@ -18,7 +18,7 @@ const FarmAddedModal = ({ setShow }) => {
       roleName: data.roleName,
       gender: data.gender,
       resAddress: data.resAddress,
-      ageGroup: "26 - 35",
+      ageGroup: data.ageGroup,
       hasBankAccount: true,
       hasSmartphone: true,
       profilePic: {

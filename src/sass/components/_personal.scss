@@ -34,7 +34,6 @@
     &_number {
       display: flex;
       gap: 8px;
-      width: 100%;
     }
 
     &_radio {
@@ -85,4 +84,8 @@
       font-style: italic;
     }
   }
+}
+
+.form-internation_phone {
+  width: 600px;
 }
