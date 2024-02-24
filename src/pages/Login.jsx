@@ -7,11 +7,13 @@ import SmallScreenTopBar from "../components/SmallScreenTopBar";
 import { useLoginMutation } from "../features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../features/auth/authSlice";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [msg, setMsg] = useState(
     "Phone number must have country code. E.g. +234"
   );
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +29,18 @@ const Login = () => {
       if (response.error) {
         const message = response.error.data.message;
         setMsg(message);
-        dispatch(setCredentials(credential, password));
+        const user = { credential, message, error: true };
+        // console.log("this is error user", user);
+        const accessToken = "";
+        dispatch(setCredentials({ accessToken, user }));
+        navigate("/verification");
+      }
+      if (response.data) {
+        const accessToken = response.data.data.user.verificationToken || "";
+        const user = response.data.data.user;
+        // console.log("this is login user", user);
+        dispatch(setCredentials({ accessToken, user }));
+        navigate("/verification");
       }
       console.log(response);
     } catch (error) {
@@ -38,7 +51,7 @@ const Login = () => {
     <div className="page">
       <div className="page-rightsection">
         <div className="page-rightsection_content">
-          <SmallScreenTopBar />
+          {/* <SmallScreenTopBar /> */}
           <div className="page-rightsection_content-main">
             <div className="page-rightsection_content-main_title">
               <h1>Welcome back!</h1>

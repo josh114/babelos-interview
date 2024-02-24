@@ -40,8 +40,8 @@ const FarmAddedModal = ({ setShow }) => {
     try {
       const response = await axios.post(api_endpoint + "/users/signup", body);
       const user = response.data.data.newUser;
-      const verificationToken = response.data.data.newUser.verificationToken;
-      dispatch(setCredentials(verificationToken, user));
+      const accessToken = response.data.data.newUser.verificationToken;
+      dispatch(setCredentials({ accessToken, user }));
       console.log(response.data);
       setShow(false);
       navigate("/verification");

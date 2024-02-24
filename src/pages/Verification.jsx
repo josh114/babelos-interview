@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageImage from "../components/PageImage";
 import verify from "../assets/verify.png";
 import SmallScreenTopBar from "../components/SmallScreenTopBar";
@@ -10,24 +10,60 @@ import { selectCurrentUser } from "../features/auth/authSlice";
 import VerificationTimer from "../components/VerificationTimer";
 import { useSelector } from "react-redux";
 import VerificationInputs from "../components/VerificationInputs";
+import { useAddVerificationCodeMutation } from "../features/userSlice";
 
 const Verification = () => {
   const [showVerification, setShowVerification] = useState(true);
   const navigate = useNavigate();
-  const [success, showSuccess] = useState(false);
-  const [pending, showPending] = useState(false);
+  const [addVerificationCode] = useAddVerificationCodeMutation();
+  const handleGetCode = async (credential) => {
+    try {
+      const body = {
+        credential: credential,
+      };
+      const response = await addVerificationCode(body);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [success, setSuccess] = useState(false);
+  const [pending, setPending] = useState(false);
   const userData = useSelector(selectCurrentUser);
+  // console.log("this is user data", userData);
   let credential;
   if (userData) {
     credential = userData.credential;
   } else {
     credential = "no user found";
   }
+  useEffect(() => {
+    if (userData) {
+      if (userData?.error) {
+        if (userData.message === "This credential is not verified.") {
+          (async function () {
+            await handleGetCode(userData.credential);
+          })();
+        } else {
+          navigate("/");
+        }
+      }
+      if (userData?.isMobileVerified || userData?.isEmailVerified) {
+        if (userData.isApproved) {
+          setSuccess(true);
+        } else {
+          setShowVerification(false);
+          setPending(true);
+        }
+      }
+    }
+  }, [userData]);
+
   return (
     <div className="page">
       <div className="page-right">
         <div className="page-right_content">
-          <SmallScreenTopBar />
           {showVerification && (
             <div className="page-right_content-main">
               <div className="page-right_content-main_warning">
@@ -41,7 +77,9 @@ const Verification = () => {
                 <b>{credential}</b>
                 <h5>Enter verification code</h5>
               </div>
-              <VerificationInputs />
+              <VerificationInputs
+                credential={userData ? userData.credential : ""}
+              />
 
               <VerificationTimer />
             </div>

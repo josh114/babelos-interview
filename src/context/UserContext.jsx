@@ -51,7 +51,7 @@ export const UserProvider = ({ children }) => {
       ...prevData,
       farmDetails: prevData.farmDetails.concat(farmData),
     }));
-    console.log(data);
+    // console.log(data);
   };
   const handlePhone = (phone) => {
     setData((prevData) => ({
@@ -91,20 +91,20 @@ export const UserProvider = ({ children }) => {
     const name = e.target.name;
 
     const value = type === "checkbox" ? e.target.checked : e.target.value;
-    console.log(value);
+    // console.log(value);
 
     setData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    console.log(data);
+    // console.log(data);
   };
   const handlePassword = (password) => {
     setData((prevData) => ({
       ...prevData,
       password: password,
     }));
-    console.log("this is password", password);
+    // console.log("this is password", password);
   };
   const handleRadio = (e) => {
     const name = e.target.name;
@@ -162,7 +162,7 @@ export const UserProvider = ({ children }) => {
       data.password,
       data.confirm_password,
     ];
-    console.log(personal.every(Boolean));
+    // console.log(personal.every(Boolean));
     return personal.every(Boolean);
   };
   const canNextPage2 = () => {

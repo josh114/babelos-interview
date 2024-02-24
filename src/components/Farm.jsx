@@ -49,6 +49,7 @@ const Farm = () => {
       },
     ],
   };
+  const pageData = [farmName, farmlat, farmlong, cropData];
   let dis;
   const hideButton = {
     display: "none",
@@ -65,7 +66,7 @@ const Farm = () => {
         <div className="farm-content_title">
           <h3>Farm Registration</h3>
         </div>
-        {/* <FarmSlider /> */}
+        <FarmSlider />
         <div className="form-group">
           <label className="form-label" htmlFor="farm_name">
             Farm Name*
@@ -101,7 +102,7 @@ const Farm = () => {
               />
             </div>
           </div>
-          <p>Ex: Longitude: 8.6753&deg; E. Latitude: 9.0820&deg; N</p>
+          <p>Ex: Longitude: 8.6753&deg; Latitude: 9.0820&deg;</p>
         </div>
 
         <div className="crops">
@@ -160,6 +161,7 @@ const Farm = () => {
             className="button hide green_button main_button"
             onClick={handleSubmit}
             style={dis}
+            disabled={!pageData.every(Boolean)}
           >
             Add farm
           </button>

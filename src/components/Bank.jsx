@@ -2,11 +2,22 @@ import React, { useState } from "react";
 import useUserContext from "../hooks/useUserContext";
 
 const Bank = () => {
-  const { data, handleChange, handleRadio, handleBank } = useUserContext();
+  const {
+    data,
+    handleChange,
+    handleRadio,
+    handleBank,
+    continueHide,
+    setPage,
+    farmHide,
+    page,
+  } = useUserContext();
   const [check, setCheck] = useState(false);
   const activeStyle = {
     display: check ? "block" : "none",
   };
+  const pageData = [data.hasSmartPhone];
+
   const banks = [
     "Access Bank Plc",
     "Fidelity Bank Plc",
@@ -17,6 +28,17 @@ const Bank = () => {
     "United Bank for Africa Plc",
     "Zenith Bank Plc",
   ];
+  const handlePrev = () => setPage((prev) => prev - 1);
+
+  const handleNext = () => setPage((prev) => prev + 1);
+  let dis;
+  const hideButton = {
+    display: "none",
+  };
+  const showButton = {
+    display: "block",
+  };
+  farmHide ? (dis = hideButton) : (dis = showButton);
   return (
     <div className="form">
       <div className="bank-title">
@@ -133,6 +155,25 @@ const Bank = () => {
             />
           </div>
         </div>
+      </div>
+
+      <div className="page-right_button-container">
+        <button
+          className={`button main_button`}
+          disabled={page === 0}
+          onClick={handlePrev}
+          style={{ display: page === 3 ? "none" : "block" }}
+        >
+          Back
+        </button>
+        <button
+          className="button green_button main_button"
+          onClick={handleNext}
+          disabled={!pageData.every(Boolean)}
+          style={continueHide ? hideButton : showButton}
+        >
+          Continue
+        </button>
       </div>
     </div>
   );

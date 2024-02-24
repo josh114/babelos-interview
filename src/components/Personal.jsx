@@ -8,9 +8,42 @@ import UploadID from "./UploadID";
 import UploadPic from "./UploadPic";
 
 const Personal = () => {
-  const { data, handleChange, handleRadio, handlePhone } = useUserContext();
+  const {
+    data,
+    page,
+    handleChange,
+    handleRadio,
+    handlePhone,
+    disableNext,
+    continueHide,
+    setPage,
+    farmHide,
+  } = useUserContext();
   const [phone, setPhone] = useState("");
-  console.log(phone);
+  // console.log(phone);
+  const pageData = [
+    data.firstName,
+    data.lastName,
+    data.email,
+    data.credential,
+    data.password,
+    data.ageGroup,
+    data.gender,
+    data.resAddress,
+    data.idUpload.idType,
+  ];
+
+  const handlePrev = () => setPage((prev) => prev - 1);
+
+  const handleNext = () => setPage((prev) => prev + 1);
+  let dis;
+  const hideButton = {
+    display: "none",
+  };
+  const showButton = {
+    display: "block",
+  };
+  farmHide ? (dis = hideButton) : (dis = showButton);
   return (
     <div className="main-content">
       <div className="main-content_form">
@@ -228,6 +261,24 @@ const Personal = () => {
 
             <UploadPic />
           </form>
+          <div className="page-right_button-container">
+            <button
+              className={`button main_button`}
+              disabled={page === 0}
+              onClick={handlePrev}
+              style={{ display: page === 3 ? "none" : "block" }}
+            >
+              Back
+            </button>
+            <button
+              className="button green_button main_button"
+              onClick={handleNext}
+              disabled={!pageData.every(Boolean)}
+              style={continueHide ? hideButton : showButton}
+            >
+              Continue
+            </button>
+          </div>
         </div>
       </div>
     </div>
