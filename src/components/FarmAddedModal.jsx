@@ -4,10 +4,13 @@ import useUserContext from "../hooks/useUserContext";
 import axios from "axios";
 import { api_endpoint } from "../config/url";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../features/auth/authSlice";
 
 const FarmAddedModal = ({ setShow }) => {
   const { data } = useUserContext();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const body = {
     userDetails: {
       firstName: data.firstName,
@@ -36,6 +39,9 @@ const FarmAddedModal = ({ setShow }) => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(api_endpoint + "/users/signup", body);
+      const user = response.data.data.newUser;
+      const verificationToken = response.data.data.newUser.verificationToken;
+      dispatch(setCredentials(verificationToken, user));
       console.log(response.data);
       setShow(false);
       navigate("/verification");

@@ -6,12 +6,23 @@ import TopBar from "../components/Topbar";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { useNavigate } from "react-router";
+import { selectCurrentUser } from "../features/auth/authSlice";
+import VerificationTimer from "../components/VerificationTimer";
+import { useSelector } from "react-redux";
+import VerificationInputs from "../components/VerificationInputs";
 
 const Verification = () => {
   const [showVerification, setShowVerification] = useState(true);
   const navigate = useNavigate();
   const [success, showSuccess] = useState(false);
   const [pending, showPending] = useState(false);
+  const userData = useSelector(selectCurrentUser);
+  let credential;
+  if (userData) {
+    credential = userData.credential;
+  } else {
+    credential = "no user found";
+  }
   return (
     <div className="page">
       <div className="page-right">
@@ -27,27 +38,12 @@ const Verification = () => {
               <div className="page-right_content-main_text">
                 <h1>Verification required</h1>
                 <p>A 5 digit verification code has been sent to</p>
-                <b>+234809944989</b>
+                <b>{credential}</b>
                 <h5>Enter verification code</h5>
               </div>
-              <div className="page-right_content-main_input">
-                <input name="code" className="code-input" required />
-                <input name="code" className="code-input" required />
-                <input name="code" className="code-input" required />
-                <input name="code" className="code-input" required />
-                <input name="code" className="code-input" required />
-              </div>
-              <div className="page-right_content-main_submit">
-                <button type="submit">Continue</button>
-              </div>
-              <div className="page-right_content-main_resend">
-                <p>
-                  Didn't receive the code?{" "}
-                  <span>
-                    Resend in <b>01:59</b>
-                  </span>
-                </p>
-              </div>
+              <VerificationInputs />
+
+              <VerificationTimer />
             </div>
           )}
           {success && (
