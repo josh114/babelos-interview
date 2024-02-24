@@ -1,21 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import login from "../assets/login.png";
 import { IoIosArrowBack } from "react-icons/io";
 import PageImage from "../components/PageImage";
 import fingerprint from "../assets/right-thumb.png";
 import SmallScreenTopBar from "../components/SmallScreenTopBar";
+import { useLoginMutation } from "../features/auth/authApiSlice";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../features/auth/authSlice";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [msg, setMsg] = useState(
+    "Phone number must have country code. E.g. +234"
+  );
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [credential, setCredential] = useState("");
+  const [password, setPassword] = useState("");
+  const [login] = useLoginMutation();
+
+  const handleLogin = async () => {
+    try {
+      const body = {
+        credential,
+        password,
+      };
+      const response = await login(body);
+      if (response.error) {
+        const message = response.error.data.message;
+        setMsg(message);
+        const user = { credential, message, error: true };
+        // console.log("this is error user", user);
+        const accessToken = "";
+        dispatch(setCredentials({ accessToken, user }));
+        navigate("/verification");
+      }
+      if (response.data) {
+        const accessToken = response.data.data.user.verificationToken || "";
+        const user = response.data.data.user;
+        // console.log("this is login user", user);
+        dispatch(setCredentials({ accessToken, user }));
+        navigate("/verification");
+      }
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="page">
-      {/* <div className="page-left">
-        <div className="page-left_image">
-          <PageImage page_type={"login"} />
-        </div>
-      </div> */}
       <div className="page-rightsection">
         <div className="page-rightsection_content">
-          <SmallScreenTopBar />
+          {/* <SmallScreenTopBar /> */}
           <div className="page-rightsection_content-main">
             <div className="page-rightsection_content-main_title">
               <h1>Welcome back!</h1>
@@ -32,13 +68,10 @@ const Login = () => {
                   name="email-phone"
                   type="text"
                   placeholder="Enter Email address or Phone number"
-                  value={""}
-                  onChange={() => {}}
+                  onChange={(e) => setCredential(e.target.value)}
                   required
                 />
-                <p className="form-error">
-                  This phone number is not verified. Log in with email instead
-                </p>
+                <p className="form-error">{msg}</p>
               </div>
               <div className="form-group">
                 <label className="form-label" htmlFor="email-phone">
@@ -52,8 +85,7 @@ const Login = () => {
                       name="password"
                       type="password"
                       placeholder="Enter password"
-                      value={""}
-                      onChange={() => {}}
+                      onChange={(e) => setPassword(e.target.value)}
                       required
                     />
                   </div>
@@ -62,9 +94,7 @@ const Login = () => {
                     <img src={fingerprint} height={40} alt="Fingerprint" />
                   </div>
                 </div>
-                <p className="form-error">
-                  This phone number is not verified. Log in with email instead
-                </p>
+                <p className="form-error">{}</p>
               </div>
               <div className="form-group">
                 <div className="form-pair">
@@ -84,7 +114,11 @@ const Login = () => {
                   </div>
                 </div>
               </div>
-              <button type="submit" className="form-button">
+              <button
+                type="submit"
+                className="form-button"
+                onClick={handleLogin}
+              >
                 Login
               </button>
               <p className="form-text">

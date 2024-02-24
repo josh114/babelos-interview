@@ -9,9 +9,15 @@
     @media screen and (max-width: 1552px) {
       // padding-top: 150px;
     }
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 1200px) {
       max-height: 500px;
     }
+    @media screen and (max-width: 1024px) {
+      max-height: 400px;
+    }
+    // @media screen and (max-width: 1024px) {
+    //   max-height: 500px;
+    // }
   }
 }
 

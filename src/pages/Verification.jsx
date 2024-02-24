@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageImage from "../components/PageImage";
 import verify from "../assets/verify.png";
 import SmallScreenTopBar from "../components/SmallScreenTopBar";
@@ -6,17 +6,64 @@ import TopBar from "../components/Topbar";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { useNavigate } from "react-router";
+import { selectCurrentUser } from "../features/auth/authSlice";
+import VerificationTimer from "../components/VerificationTimer";
+import { useSelector } from "react-redux";
+import VerificationInputs from "../components/VerificationInputs";
+import { useAddVerificationCodeMutation } from "../features/userSlice";
 
 const Verification = () => {
   const [showVerification, setShowVerification] = useState(true);
   const navigate = useNavigate();
-  const [success, showSuccess] = useState(false);
-  const [pending, showPending] = useState(false);
+  const [addVerificationCode] = useAddVerificationCodeMutation();
+  const handleGetCode = async (credential) => {
+    try {
+      const body = {
+        credential: credential,
+      };
+      const response = await addVerificationCode(body);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [success, setSuccess] = useState(false);
+  const [pending, setPending] = useState(false);
+  const userData = useSelector(selectCurrentUser);
+  // console.log("this is user data", userData);
+  let credential;
+  if (userData) {
+    credential = userData.credential;
+  } else {
+    credential = "no user found";
+  }
+  useEffect(() => {
+    if (userData) {
+      if (userData?.error) {
+        if (userData.message === "This credential is not verified.") {
+          (async function () {
+            await handleGetCode(userData.credential);
+          })();
+        } else {
+          navigate("/");
+        }
+      }
+      if (userData?.isMobileVerified || userData?.isEmailVerified) {
+        if (userData.isApproved) {
+          setSuccess(true);
+        } else {
+          setShowVerification(false);
+          setPending(true);
+        }
+      }
+    }
+  }, [userData]);
+
   return (
     <div className="page">
       <div className="page-right">
         <div className="page-right_content">
-          <SmallScreenTopBar />
           {showVerification && (
             <div className="page-right_content-main">
               <div className="page-right_content-main_warning">
@@ -27,27 +74,14 @@ const Verification = () => {
               <div className="page-right_content-main_text">
                 <h1>Verification required</h1>
                 <p>A 5 digit verification code has been sent to</p>
-                <b>+234809944989</b>
+                <b>{credential}</b>
                 <h5>Enter verification code</h5>
               </div>
-              <div className="page-right_content-main_input">
-                <input name="code" className="code-input" required />
-                <input name="code" className="code-input" required />
-                <input name="code" className="code-input" required />
-                <input name="code" className="code-input" required />
-                <input name="code" className="code-input" required />
-              </div>
-              <div className="page-right_content-main_submit">
-                <button type="submit">Continue</button>
-              </div>
-              <div className="page-right_content-main_resend">
-                <p>
-                  Didn't receive the code?{" "}
-                  <span>
-                    Resend in <b>01:59</b>
-                  </span>
-                </p>
-              </div>
+              <VerificationInputs
+                credential={userData ? userData.credential : ""}
+              />
+
+              <VerificationTimer />
             </div>
           )}
           {success && (

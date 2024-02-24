@@ -1,13 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useUserContext from "../hooks/useUserContext";
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 
 import Password from "./Password";
 import UploadID from "./UploadID";
 import UploadPic from "./UploadPic";
 
 const Personal = () => {
-  const { data, handleChange, handleRadio } = useUserContext();
+  const {
+    data,
+    page,
+    handleChange,
+    handleRadio,
+    handlePhone,
+    disableNext,
+    continueHide,
+    setPage,
+    farmHide,
+  } = useUserContext();
+  const [phone, setPhone] = useState("");
+  // console.log(phone);
+  const pageData = [
+    data.firstName,
+    data.lastName,
+    data.email,
+    data.credential,
+    data.password,
+    data.ageGroup,
+    data.gender,
+    data.resAddress,
+    data.idUpload.idType,
+  ];
 
+  const handlePrev = () => setPage((prev) => prev - 1);
+
+  const handleNext = () => setPage((prev) => prev + 1);
+  let dis;
+  const hideButton = {
+    display: "none",
+  };
+  const showButton = {
+    display: "block",
+  };
+  farmHide ? (dis = hideButton) : (dis = showButton);
   return (
     <div className="main-content">
       <div className="main-content_form">
@@ -56,19 +92,33 @@ const Personal = () => {
                   Phone Number*
                 </label>
                 <div className="form-group_number">
-                  <select
-                    className="form-select"
-                    name="credential"
-                    id="phone_number"
-                  ></select>
-                  <input
-                    className="form-input"
+                  <PhoneInput
+                    className="form-internation_phone"
                     id="number"
                     name="credential"
-                    placeholder="81000 0000"
-                    onChange={handleChange}
+                    placeholder="8100002320"
                     type="text"
                     required
+                    defaultCountry="ng"
+                    value={phone}
+                    inputStyle={{
+                      width: "100%",
+                      maxWidth: "600px !important",
+                      marginLeft: "10px",
+                      borderRadius: "8px",
+                      // border: 0,
+                    }}
+                    style={{
+                      onFocus: {
+                        borderColor: "#5ebaa2",
+                        boxShadow:
+                          "0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #e7f5f1",
+                      },
+                    }}
+                    onChange={(phone) => {
+                      setPhone(phone);
+                      handlePhone(phone);
+                    }}
                   />
                 </div>
               </div>
@@ -102,12 +152,12 @@ const Personal = () => {
                   onChange={handleChange}
                 >
                   <option value="">Select age</option>
-                  <option value="18-25">18 - 25</option>
-                  <option value="26-35">26 - 35</option>
-                  <option value="36-45">36 - 45</option>
-                  <option value="46-55">46 - 55</option>
-                  <option value="56-65">56 - 65</option>
-                  <option value="66-75">66 - 75</option>
+                  <option value="18 - 25">18 - 25</option>
+                  <option value="26 - 35">26 - 35</option>
+                  <option value="36 - 45">36 - 45</option>
+                  <option value="46 - 55">46 - 55</option>
+                  <option value="56 - 65">56 - 65</option>
+                  <option value="66 - 75">66 - 75</option>
                 </select>
               </div>
 
@@ -211,6 +261,24 @@ const Personal = () => {
 
             <UploadPic />
           </form>
+          <div className="page-right_button-container">
+            <button
+              className={`button main_button`}
+              disabled={page === 0}
+              onClick={handlePrev}
+              style={{ display: page === 3 ? "none" : "block" }}
+            >
+              Back
+            </button>
+            <button
+              className="button green_button main_button"
+              onClick={handleNext}
+              disabled={!pageData.every(Boolean)}
+              style={continueHide ? hideButton : showButton}
+            >
+              Continue
+            </button>
+          </div>
         </div>
       </div>
     </div>

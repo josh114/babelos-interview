@@ -1,12 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { RiErrorWarningLine } from "react-icons/ri";
 
 import leftIndex from "../assets/left-index.png";
 import leftThumb from "../assets/left-thumb.png";
 import rightIndex from "../assets/right-index.png";
 import rightThumb from "../assets/right-thumb.png";
+import useUserContext from "../hooks/useUserContext";
+import { set } from "date-fns";
 
 const Security = () => {
+  const {
+    data,
+    handleRadio,
+    handleBank,
+    continueHide,
+    setPage,
+    farmHide,
+    page,
+  } = useUserContext();
+  const [pageData, setPageData] = useState([false]);
+  const handlePrev = () => setPage((prev) => prev - 1);
+
+  const handleNext = () => setPage((prev) => prev + 1);
+  let dis;
+  const hideButton = {
+    display: "none",
+  };
+  const showButton = {
+    display: "block",
+  };
+  farmHide ? (dis = hideButton) : (dis = showButton);
+
+  const handleChange = (e) => {
+    const checked = e.target.checked;
+    if (checked) {
+      setPageData([true]);
+    } else {
+      setPageData([false]);
+    }
+  };
   return (
     <div className="security form">
       <div className="security-content">
@@ -53,10 +85,28 @@ const Security = () => {
 
         <div className="security-skip">
           <button className="button">
-            <input type="checkbox" />
+            <input type="checkbox" onChange={handleChange} />
             Skip for now
           </button>
         </div>
+      </div>
+      <div className="page-right_button-container">
+        <button
+          className={`button main_button`}
+          disabled={page === 0}
+          onClick={handlePrev}
+          style={{ display: page === 3 ? "none" : "block" }}
+        >
+          Back
+        </button>
+        <button
+          className="button green_button main_button"
+          onClick={handleNext}
+          disabled={!pageData.every(Boolean)}
+          style={continueHide ? hideButton : showButton}
+        >
+          Continue
+        </button>
       </div>
     </div>
   );
