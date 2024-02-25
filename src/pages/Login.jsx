@@ -53,25 +53,25 @@ const Login = () => {
         <div className="page-rightsection_content">
           {/* <SmallScreenTopBar /> */}
           <div className="page-rightsection_content-main">
-            <div className="page-rightsection_content-main_title">
-              <h1>Welcome back!</h1>
-              <p>Welcome back! Please enter your details</p>
-            </div>
-            <div className="form">
+            <div className="form login_form">
+              <div className="page-rightsection_content-main_title">
+                <h1>Welcome back!</h1>
+                <p>Welcome back! Please enter your details</p>
+              </div>
               <div className="form-group">
                 <label className="form-label" htmlFor="email-phone">
-                  Email address/Phone number
+                  Email address / Phone number
                 </label>
                 <input
                   className="form-input"
                   id="email-phone"
                   name="email-phone"
                   type="text"
-                  placeholder="Enter Email address or Phone number"
+                  placeholder="Enter Email or Phone number"
                   onChange={(e) => setCredential(e.target.value)}
                   required
                 />
-                <p className="form-error">{msg}</p>
+                <p className="login-msg">{msg}</p>
               </div>
               <div className="form-group">
                 <label className="form-label" htmlFor="email-phone">
@@ -122,7 +122,10 @@ const Login = () => {
                 Login
               </button>
               <p className="form-text">
-                Don't have an account? <a className="form-link">Sign up</a>
+                Don't have an account?{" "}
+                <a className="form-link" href="/">
+                  Sign up
+                </a>
               </p>
             </div>
           </div>

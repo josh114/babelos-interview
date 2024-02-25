@@ -38,3 +38,21 @@ body {
 option {
   font-family: "Inter";
 }
+
+progress {
+  width: 400px;
+  height: 10px;
+  border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+  background-color: var(--pri-color);
+}
+
+progress::-webkit-progress-bar {
+  background-color: #ddd;
+}
+
+progress::-moz-progress-bar {
+  background-color: #4caf50;
+}

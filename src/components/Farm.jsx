@@ -6,6 +6,7 @@ import Crops from "./Crops";
 import FarmAddedModal from "./FarmAddedModal";
 import { set } from "date-fns";
 import useUserContext from "../hooks/useUserContext";
+import FarmDoc from "./FarmDoc";
 
 const Farm = () => {
   const { handleFarm, page, setPage, farmHide } = useUserContext();
@@ -128,26 +129,7 @@ const Farm = () => {
           <div>
             <p>Upload farm documents</p>
           </div>
-          <div className="farm-documents_form">
-            <label htmlFor="upload">
-              <div className="farm-documents_form-item">
-                <div className="farm-documents_form-item-icon">
-                  <FiUploadCloud className="farm-documents_icon" />
-                </div>
-                <input
-                  type="file"
-                  id="upload"
-                  className="farm-documents_input"
-                />
-                <div className="farm-documents_input-text-container">
-                  <p className="farm-documents_input-text">
-                    Click to upload <span>or drag and drop</span>
-                  </p>
-                  <p>PNG, JPG or PDF (max. 10MB)</p>
-                </div>
-              </div>
-            </label>
-          </div>
+          <FarmDoc />
         </div>
         <div className="page-right_button-container">
           <button

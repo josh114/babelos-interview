@@ -1,7 +1,9 @@
 import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
+import { useLocation } from "react-router-dom";
 
 const Topbar = () => {
+  const { pathname } = useLocation();
   return (
     <div className="topbar">
       <div className="topbar_main">
@@ -16,7 +18,10 @@ const Topbar = () => {
           </div>
         </div>
         <div className="topbar-right">
-          <div className="topbar-right_link">
+          <div
+            className="topbar-right_link"
+            style={{ display: pathname === "/login" ? "none" : "block" }}
+          >
             Already have an account? &nbsp;
             <a href="/login" className="topbar-right_link-text">
               Log in

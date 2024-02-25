@@ -6,6 +6,8 @@ import { api_endpoint } from "../config/url";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../features/auth/authSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FarmAddedModal = ({ setShow }) => {
   const { data } = useUserContext();
@@ -45,12 +47,15 @@ const FarmAddedModal = ({ setShow }) => {
       console.log(response.data);
       setShow(false);
       navigate("/verification");
+      toast.success("Account created");
     } catch (error) {
+      toast.error("an error occured while creating account");
       console.log(error);
     }
   };
   return (
     <div className="farm-modal">
+      <ToastContainer />
       <div className="farm-modal_body">
         <div className="farm-modal_body-icon">
           <img src={icon} height={60} alt="icon" />
